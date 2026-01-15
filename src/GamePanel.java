@@ -9,7 +9,7 @@ public class GamePanel extends JPanel {
 
     int boxSize = 50;
     JPanel [][]loc = new JPanel [8][8];
-
+    boolean turnWhite = true;
     boolean Select=false;
     JPanel NextSelectedSquare= null;
     JPanel OldSelectedSquare= null;
@@ -94,6 +94,9 @@ public class GamePanel extends JPanel {
 
                 if(!Select){
                     if(p.getComponentCount() >0){
+                        Pieces piece= (Pieces) p.getComponent(0);
+                        if(turnWhite && piece.color.equals("Black")) return;
+                        if(!turnWhite && piece.color.equals("White")) return;
                         oldColor = p.getBackground();
                         p.setBackground(new Color(255, 144, 73));
                         Select=true;
@@ -110,7 +113,14 @@ public class GamePanel extends JPanel {
                     }
                     else{
                         Pieces piece= (Pieces) OldSelectedSquare.getComponent(0);
-                        if(piece.isCanMove(loc, oldX,oldY,i,j)==true){
+                        boolean canEat=false;
+                        if(p.getComponentCount() >0){
+                            Pieces targetPiece = (Pieces) p.getComponent(0);
+                            if(targetPiece.color.equals(piece.color)){
+                                canEat = true;
+                            }
+                        }
+                        if(piece.isCanMove(loc, oldX,oldY,i,j)==true && canEat==false ){
                         p.removeAll();
                         p.add(piece);
                         OldSelectedSquare.setBackground(oldColor);
@@ -120,6 +130,7 @@ public class GamePanel extends JPanel {
                         NextSelectedSquare.revalidate();
                         p.repaint();
                         p.revalidate();
+                        turnWhite = !turnWhite;
                         }else{
                             OldSelectedSquare.setBackground(oldColor);
                         }

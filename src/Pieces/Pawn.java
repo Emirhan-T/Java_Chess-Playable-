@@ -12,15 +12,33 @@ public class Pawn extends Pieces {
     }
 
     @Override
-    public boolean isCanMove(int oldX, int oldY, int newX, int newY) {
-        if(oldY != newY) return false;
+    public boolean isCanMove(JPanel[][] board,int oldX, int oldY, int newX, int newY) {
         if(color.equals("White")){
-            if(oldX == 6 && oldX-newX==2) return true;
-            if(oldX-newX==1) return true;
+            if(oldX-newX==1){
+                if(Math.abs(newY-oldY)==1&&board[newX][newY].getComponentCount()>0){
+                   return true;
+                }
+                else if(newY==oldY){
+                    if(board[newX][newY].getComponentCount()==0)return true;
+                }
+
+            }
+            else if(oldX == 6 && oldX - newX == 2 && oldY == newY){
+                if(board[newX][newY].getComponentCount() == 0 && board[oldX-1][oldY].getComponentCount() == 0)return true;
+            }
         }
         if(color.equals("Black")){
-            if(oldX == 1 && newX-oldX==2) return true;
-            if(newX-oldX==1) return true;
+            if(newX-oldX==1){
+                if(Math.abs(newY-oldY)==1&&board[newX][newY].getComponentCount()>0){
+                    return true;
+                }
+                else if(newY==oldY){
+                    if(board[newX][newY].getComponentCount()==0)return true;
+                }
+            }
+            else if(oldX == 1 && newX - oldX == 2 && oldY == newY){
+                if(board[newX][newY].getComponentCount() == 0 && board[oldX+1][oldY].getComponentCount() == 0)return true;
+            }
         }
         return false;
     }

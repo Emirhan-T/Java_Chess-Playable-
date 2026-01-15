@@ -3,7 +3,7 @@ import javax.swing.*;
 public class King extends Pieces {
     public King(String color) {
         super(color);
-        if(color == "White"){
+        if(color.equals("White")){
             this.setIcon(new ImageIcon("res/pieces/w_king.png"));
         }
         else {
@@ -12,7 +12,7 @@ public class King extends Pieces {
     }
 
     @Override
-    public boolean isCanMove(int oldX, int oldY, int newX, int newY) {
+    public boolean isCanMove(JPanel[][] board,int oldX, int oldY, int newX, int newY) {
         if(Math.abs(newX-oldX)<=1 && Math.abs(newY-oldY)<=1) return true;
         return false;
     }

@@ -5,11 +5,11 @@ import javax.swing.*;
 public class Rook extends Pieces {
     public Rook(String color) {
         super(color);
-        if (color.equals("Black")) {
-            this.setIcon(new ImageIcon("res/pieces/b_rook.png"));
+        if (color.equals("White")) {
+            this.setIcon(new ImageIcon("res/pieces/w_rook.png"));
 
         } else {
-            this.setIcon(new ImageIcon("res/pieces/w_rook.png"));
+            this.setIcon(new ImageIcon("res/pieces/b_rook.png"));
         }
     }
 
