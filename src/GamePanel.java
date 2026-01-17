@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.annotation.Target;
 
 public class GamePanel extends JPanel {
 
@@ -121,16 +122,61 @@ public class GamePanel extends JPanel {
                             }
                         }
                         if(piece.isCanMove(loc, oldX,oldY,i,j)==true && canEat==false ){
+
+                            Pieces deadpiece=null;
+                            if(p.getComponentCount() >0){
+                                deadpiece = (Pieces) p.getComponent(0);
+                            }
                         p.removeAll();
                         p.add(piece);
-                        OldSelectedSquare.setBackground(oldColor);
-                        OldSelectedSquare.repaint();
-                        NextSelectedSquare.repaint();
-                        OldSelectedSquare.revalidate();
-                        NextSelectedSquare.revalidate();
-                        p.repaint();
-                        p.revalidate();
-                        turnWhite = !turnWhite;
+                        if(isKingUnderAttack(piece.color)){
+                            OldSelectedSquare.add(piece);
+                            if(deadpiece!=null){
+                                p.add(deadpiece);
+                            }
+                            OldSelectedSquare.setBackground(oldColor);
+                        }
+                        else {
+                            OldSelectedSquare.setBackground(oldColor);
+                            OldSelectedSquare.repaint();
+                            NextSelectedSquare.repaint();
+                            OldSelectedSquare.revalidate();
+                            NextSelectedSquare.revalidate();
+                            p.repaint();
+                            p.revalidate();
+                            piece.hasMoved=true;
+                            turnWhite = !turnWhite;
+                            if(piece instanceof King && Math.abs(oldY - j) == 2){
+
+                                // SENARYO 1: KISA ROK (Sağa Gitti)
+                                if(j > oldY){
+                                    // Sağ köşedeki (7. sütun) Kaleyi al
+                                    Pieces rook = (Pieces) loc[oldX][7].getComponent(0);
+                                    // Şahın soluna (5. sütun) koy
+                                    loc[oldX][5].add(rook);
+
+                                    // Ekranı güncelle
+                                    loc[oldX][7].repaint();
+                                    loc[oldX][7].revalidate();
+                                    loc[oldX][5].repaint();
+                                    loc[oldX][5].revalidate();
+                                }
+
+                                // SENARYO 2: UZUN ROK (Sola Gitti)
+                                else{
+                                    // Sol köşedeki (0. sütun) Kaleyi al
+                                    Pieces rook = (Pieces) loc[oldX][0].getComponent(0);
+                                    // Şahın sağına (3. sütun) koy
+                                    loc[oldX][3].add(rook);
+
+                                    // Ekranı güncelle
+                                    loc[oldX][0].repaint();
+                                    loc[oldX][0].revalidate();
+                                    loc[oldX][3].repaint();
+                                    loc[oldX][3].revalidate();
+                                }
+                            }
+                        }
                         }else{
                             OldSelectedSquare.setBackground(oldColor);
                         }
@@ -147,6 +193,35 @@ public class GamePanel extends JPanel {
 
             }
         });
+    }
+    boolean isKingUnderAttack(String myColor){
+        int kingX=-1, kingY =-1;
+
+        for(int i = 0; i<8;i++){
+            for(int j = 0; j<8;j++){
+            if(loc[i][j].getComponentCount()>0){
+                Pieces piece = (Pieces) loc[i][j].getComponent(0);
+                if(piece instanceof King && myColor.equals(piece.color)){
+                    kingX=i;
+                    kingY=j;
+                    break;
+                }
+            }
+            }
+        }
+        for(int i = 0; i<8; i++){
+            for(int j = 0; j<8;j++){
+                if(loc[i][j].getComponentCount()>0){
+                    Pieces piece = (Pieces) loc[i][j].getComponent(0);
+                    if(!piece.color.equals(myColor)){
+                        if(piece.isCanMove(loc, i,j,kingX,kingY)==true){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }
