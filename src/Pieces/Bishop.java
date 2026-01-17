@@ -1,9 +1,11 @@
 package Pieces;
+
 import javax.swing.*;
+
 public class Bishop extends Pieces {
     public Bishop(String color) {
         super(color);
-        if(color.equals("White")) {
+        if(color.equals("White")){
             this.setIcon(new ImageIcon("res/pieces/w_bishop.png"));
         }
         else {
@@ -12,20 +14,28 @@ public class Bishop extends Pieces {
     }
 
     @Override
-    public boolean isCanMove(JPanel[][] board,int oldX, int oldY, int newX, int newY) {
-        if(Math.abs(newX-oldX)!=Math.abs(newY-oldY))return false;
-        int dirX=(oldX < newX)? 1:-1;
-        int dirY=(oldY < newY)? 1:-1;
+    public boolean isCanMove(JPanel[][] board, int oldX, int oldY, int newX, int newY) {
 
-        int currentX= oldX+dirX;
-        int currentY= oldY+dirY;
-        while (currentX!=newX && currentY!=newY){
-            if(board[currentX][currentY].getComponentCount()>0){
-                return false;
+        if (Math.abs(oldX - newX) == Math.abs(oldY - newY)) {
+
+            int xDir = (newX - oldX) > 0 ? 1 : -1;
+            int yDir = (newY - oldY) > 0 ? 1 : -1;
+
+            int i = oldX + xDir;
+            int j = oldY + yDir;
+
+            while (i != newX && j != newY) {
+                if(i < 0 || i > 7 || j < 0 || j > 7) return false;
+
+                if (board[i][j].getComponentCount() > 0) {
+                    return false;
+                }
+
+                i += xDir;
+                j += yDir;
             }
-            currentX += dirX;
-            currentY += dirY;
+            return true;
         }
-        return true;
+        return false;
     }
 }

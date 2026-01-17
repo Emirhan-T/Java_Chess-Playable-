@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-
+import Pieces.GamePanel;
 public class MyFrame extends JFrame {
 
     GamePanel panel = new GamePanel();

@@ -19,25 +19,33 @@ public class Queen extends Pieces {
             }
             return true;
         }
+        // Yatay Hareket
         if (oldX == newX) {
             for (int i = Math.min(oldY, newY) + 1; i < Math.max(oldY, newY); i++) {
                 if (board[newX][i].getComponentCount() > 0) return false;
             }
             return true;
         }
-        if(Math.abs(newX-oldX)!=Math.abs(newY-oldY))return false;
-        int dirX=(oldX < newX)? 1:-1;
-        int dirY=(oldY < newY)? 1:-1;
+        if (Math.abs(oldX - newX) == Math.abs(oldY - newY)) {
 
-        int currentX= oldX+dirX;
-        int currentY= oldY+dirY;
-        while (currentX!=newX && currentY!=newY){
-            if(board[currentX][currentY].getComponentCount()>0){
-                return false;
+            int xDir = (newX - oldX) > 0 ? 1 : -1;
+            int yDir = (newY - oldY) > 0 ? 1 : -1;
+
+            int i = oldX + xDir;
+            int j = oldY + yDir;
+
+            while (i != newX && j != newY) {
+                if(i < 0 || i > 7 || j < 0 || j > 7) return false;
+
+                if (board[i][j].getComponentCount() > 0) {
+                    return false;
+                }
+
+                i += xDir;
+                j += yDir;
             }
-            currentX += dirX;
-            currentY += dirY;
+            return true;
         }
-        return true;
+        return false;
     }
 }

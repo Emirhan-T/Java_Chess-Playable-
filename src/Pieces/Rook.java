@@ -19,13 +19,13 @@ public class Rook extends Pieces {
             for (int i = Math.min(oldX, newX) + 1; i < Math.max(oldX, newX); i++) {
                 if (board[i][newY].getComponentCount() > 0) return false;
             }
-         return true;
+            return true;
         }
         if (oldX == newX) {
             for (int i = Math.min(oldY, newY) + 1; i < Math.max(oldY, newY); i++) {
                 if (board[newX][i].getComponentCount() > 0) return false;
             }
-         return true;
+            return true;
         }
         return false;
     }

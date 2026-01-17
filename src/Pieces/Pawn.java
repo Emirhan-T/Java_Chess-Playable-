@@ -21,6 +21,14 @@ public class Pawn extends Pieces {
                 else if(newY==oldY){
                     if(board[newX][newY].getComponentCount()==0)return true;
                 }
+                else if(Math.abs(newY-oldY)==1 && board[newX][newY].getComponentCount()==0){
+                    if(board[oldX][newY].getComponentCount()>0){
+                   Pieces sidePiece = (Pieces) board[oldX][newY].getComponent(0);
+                   if(sidePiece == GamePanel.enPassantTarget){
+                       return true;
+                   }
+                }
+                }
 
             }
             else if(oldX == 6 && oldX - newX == 2 && oldY == newY){
@@ -34,6 +42,14 @@ public class Pawn extends Pieces {
                 }
                 else if(newY==oldY){
                     if(board[newX][newY].getComponentCount()==0)return true;
+                }
+                else if(Math.abs(newY-oldY)==1 && board[newX][newY].getComponentCount()==0){
+                    if(board[oldX][newY].getComponentCount()>0){
+                        Pieces sidePiece = (Pieces) board[oldX][newY].getComponent(0);
+                        if(sidePiece == GamePanel.enPassantTarget){
+                            return true;
+                        }
+                    }
                 }
             }
             else if(oldX == 1 && newX - oldX == 2 && oldY == newY){
