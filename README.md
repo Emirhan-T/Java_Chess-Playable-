@@ -1,3 +1,6 @@
+![Oyun Ekran Görüntüsü](res/ScreenShot1.png)
+![Oyun Ekran Görüntüsü](res/ScreenShot2.png)
+![Oyun Ekran Görüntüsü](res/ScreenShot3.png)
 **Java Satranç Oyunu**
 
 Bu proje, herhangi bir hazır oyun motoru veya üçüncü parti oyun kütüphanesi kullanılmadan, tamamen Java programlama dili ve JPanel sınıfı temel alınarak geliştirilmiş nesne yönelimli (OOP) bir satranç motorudur. Projenin temel amacı, satranç kurallarının matematiksel algoritmalarla işlendiği, sağlam bir mimariye sahip bir oyun geliştirmektir.
